@@ -168,7 +168,7 @@ async function init() {
 
     // Load the complete animation file (skeleton + character + motion)
     try {
-        const response = await fetch('../example-complete-animation.json');
+        const response = await fetch('./example-complete-animation.json');
         if (!response.ok) {
             throw new Error(`Failed to load file: ${response.statusText}`);
         }
