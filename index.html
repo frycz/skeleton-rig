@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skeleton Rig Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            background: #252526;
+            padding: 15px 20px;
+            border-bottom: 1px solid #3e3e42;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        #canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2d2d30;
+            position: relative;
+        }
+
+        canvas {
+            border: 1px solid #3e3e42;
+            background: #1e1e1e;
+            width: 100%;
+            height: 100%;
+        }
+
+        #sidebar {
+            width: 300px;
+            background: #252526;
+            border-left: 1px solid #3e3e42;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .info-section {
+            margin-bottom: 25px;
+        }
+
+        .info-section h2 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item {
+            padding: 8px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #3e3e42;
+        }
+
+        .info-label {
+            color: #858585;
+            margin-right: 8px;
+        }
+
+        .bone-list {
+            list-style: none;
+        }
+
+        .bone-item {
+            padding: 6px 10px;
+            margin: 4px 0;
+            background: #2d2d30;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: move;
+            transition: background 0.2s, transform 0.1s;
+            user-select: none;
+        }
+
+        .bone-item:hover {
+            background: #3e3e42;
+        }
+
+        .bone-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .bone-item.drag-over {
+            background: #0e639c;
+            border-left: 3px solid #1177bb;
+        }
+
+        .bone-item.invalid-drop {
+            background: #7f1d1d;
+            border-left: 3px solid #ef4444;
+        }
+
+        .bone-item.root {
+            margin-left: 0;
+        }
+
+        .bone-item.child {
+            margin-left: 20px;
+        }
+
+        .bone-item.grandchild {
+            margin-left: 40px;
+        }
+
+        #download-btn, #upload-skeleton-btn {
+            width: 100%;
+            padding: 10px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        #download-btn:hover, #upload-skeleton-btn:hover {
+            background: #1177bb;
+        }
+
+        #download-btn:active, #upload-skeleton-btn:active {
+            background: #0a4d7d;
+        }
+
+        #upload-skeleton-btn {
+            background: #065f46;
+        }
+
+        #upload-skeleton-btn:hover {
+            background: #047857;
+        }
+
+        #upload-skeleton-btn:active {
+            background: #064e3b;
+        }
+
+        /* Animation Timeline */
+        #timeline-container {
+            height: 150px;
+            background: #252526;
+            border-top: 1px solid #3e3e42;
+            display: none;
+            flex-direction: column;
+        }
+
+        #timeline-container.active {
+            display: flex;
+        }
+
+        /* Adjust debug panel when timeline is active */
+        #debug-panel.timeline-active {
+            bottom: 150px;
+        }
+
+        #timeline-header {
+            padding: 10px 20px;
+            background: #2d2d30;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3e3e42;
+        }
+
+        #timeline-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #timeline-info {
+            font-size: 12px;
+            color: #858585;
+        }
+
+        .duration-input {
+            width: 50px;
+            padding: 2px 6px;
+            background: #2d2d30;
+            border: 1px solid #3e3e42;
+            border-radius: 2px;
+            color: #d4d4d4;
+            font-size: 12px;
+            font-family: monospace;
+            outline: none;
+            text-align: center;
+        }
+
+        .duration-input:hover {
+            border-color: #4e4e52;
+        }
+
+        .duration-input:focus {
+            border-color: #0e639c;
+            background: #1e1e1e;
+        }
+
+        .timeline-btn {
+            padding: 6px 12px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .timeline-btn:hover {
+            background: #4e4e52;
+        }
+
+        .timeline-btn.active {
+            background: #0e639c;
+        }
+
+        .timeline-btn.play {
+            background: #16a34a;
+        }
+
+        .timeline-btn.play:hover {
+            background: #15803d;
+        }
+
+        #add-keyframe-btn {
+            background: #0e639c;
+        }
+
+        #add-keyframe-btn:hover {
+            background: #1177bb;
+        }
+
+        #delete-keyframe-btn {
+            background: #7f1d1d;
+        }
+
+        #delete-keyframe-btn:hover {
+            background: #991b1b;
+        }
+
+        .timeline-separator {
+            width: 1px;
+            height: 20px;
+            background: #3e3e42;
+            margin: 0 5px;
+        }
+
+        #download-motion-btn, #upload-motion-btn {
+            background: #0e639c;
+        }
+
+        #download-motion-btn:hover, #upload-motion-btn:hover {
+            background: #1177bb;
+        }
+
+        #upload-motion-btn {
+            background: #065f46;
+        }
+
+        #upload-motion-btn:hover {
+            background: #047857;
+        }
+
+        #timeline-canvas-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #timeline-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .mode-toggle {
+            padding: 8px 16px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .mode-toggle:hover {
+            background: #4e4e52;
+        }
+
+        .mode-toggle.active {
+            background: #7c2d12;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #3e3e42;
+            margin: -20px -20px 20px -20px;
+            padding: 0;
+            background: #2d2d30;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #858585;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .tab:hover {
+            color: #d4d4d4;
+            background: #3e3e42;
+        }
+
+        .tab.active {
+            color: #d4d4d4;
+            border-bottom-color: #0e639c;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Keyframes list */
+        .keyframe-list {
+            list-style: none;
+        }
+
+        .keyframe-item {
+            padding: 10px 12px;
+            margin: 4px 0;
+            background: #2d2d30;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .keyframe-item:hover {
+            background: #3e3e42;
+        }
+
+        .keyframe-item.selected {
+            background: #0e639c;
+            border-left: 3px solid #1177bb;
+        }
+
+        .keyframe-time {
+            font-weight: 500;
+            color: #d4d4d4;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .keyframe-time:hover {
+            background: #3e3e42;
+        }
+
+        .keyframe-time-input {
+            width: 60px;
+            padding: 2px 6px;
+            background: #1e1e1e;
+            border: 1px solid #0e639c;
+            border-radius: 2px;
+            color: #d4d4d4;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .keyframe-time-input:focus {
+            border-color: #1177bb;
+            box-shadow: 0 0 0 2px rgba(14, 99, 156, 0.2);
+        }
+
+        .keyframe-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .keyframe-btn {
+            padding: 4px 8px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .keyframe-btn:hover {
+            background: #4e4e52;
+        }
+
+        .keyframe-btn.duplicate {
+            background: #065f46;
+        }
+
+        .keyframe-btn.duplicate:hover {
+            background: #047857;
+        }
+
+        .keyframe-btn.delete {
+            background: #7f1d1d;
+        }
+
+        .keyframe-btn.delete:hover {
+            background: #991b1b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #858585;
+            font-size: 13px;
+        }
+
+        /* Viewport Controls */
+        #viewport-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(37, 37, 38, 0.95);
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        #viewport-controls h3 {
+            margin: 0 0 6px 0;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #858585;
+            border-bottom: 1px solid #3e3e42;
+            padding-bottom: 4px;
+        }
+
+        .viewport-control-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .viewport-control-row label {
+            color: #858585;
+            min-width: 30px;
+            font-size: 10px;
+        }
+
+        .viewport-input {
+            width: 60px;
+            padding: 3px 6px;
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 2px;
+            color: #d4d4d4;
+            font-size: 10px;
+            font-family: monospace;
+            outline: none;
+            text-align: right;
+        }
+
+        .viewport-input:hover {
+            border-color: #4e4e52;
+        }
+
+        .viewport-input:focus {
+            border-color: #0e639c;
+            background: #252526;
+        }
+
+        .viewport-reset-btn {
+            padding: 4px 8px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 9px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 2px;
+        }
+
+        .viewport-reset-btn:hover {
+            background: #0e639c;
+        }
+
+        /* Graphics Tab Styles */
+        .graphics-btn {
+            width: 100%;
+            padding: 10px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .graphics-btn:hover {
+            background: #1177bb;
+        }
+
+        .graphics-btn.upload {
+            background: #065f46;
+        }
+
+        .graphics-btn.upload:hover {
+            background: #047857;
+        }
+
+        .graphics-btn.delete {
+            background: #7f1d1d;
+            margin-top: 15px;
+        }
+
+        .graphics-btn.delete:hover {
+            background: #991b1b;
+        }
+
+        .graphics-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .graphic-item {
+            padding: 10px;
+            margin: 6px 0;
+            background: #2d2d30;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .graphic-item:hover {
+            background: #3e3e42;
+        }
+
+        .graphic-item.selected {
+            background: #0e639c;
+            border-left: 3px solid #1177bb;
+        }
+
+        .graphic-item-info {
+            flex: 1;
+            font-size: 12px;
+        }
+
+        .graphic-item-name {
+            font-weight: 500;
+            color: #d4d4d4;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .graphic-item-meta {
+            font-size: 11px;
+            color: #858585;
+        }
+
+        .graphic-item-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .graphic-item-btn {
+            padding: 4px 8px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .graphic-item-btn:hover {
+            background: #4e4e52;
+        }
+
+        .graphic-item-btn.delete {
+            background: #7f1d1d;
+        }
+
+        .graphic-item-btn.delete:hover {
+            background: #991b1b;
+        }
+
+        .graphic-property {
+            margin: 12px 0;
+            font-size: 12px;
+        }
+
+        .graphic-property label {
+            display: block;
+            color: #858585;
+            margin-bottom: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .graphic-property span:not(.z-value) {
+            color: #d4d4d4;
+        }
+
+        .graphic-input {
+            width: 100%;
+            padding: 6px 8px;
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 2px;
+            color: #d4d4d4;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .graphic-input:hover {
+            border-color: #4e4e52;
+        }
+
+        .graphic-input:focus {
+            border-color: #0e639c;
+            background: #252526;
+        }
+
+        .graphic-input.small {
+            width: 60px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group span {
+            font-size: 11px;
+            color: #858585;
+        }
+
+        .z-btn {
+            padding: 4px 12px;
+            background: #3e3e42;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .z-btn:hover {
+            background: #0e639c;
+        }
+
+        .z-value {
+            min-width: 30px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .graphic-actions {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #3e3e42;
+        }
+
+        /* Debug Panel Styles */
+        #debug-panel {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 350px;
+            background: #252526;
+            border-right: 1px solid #3e3e42;
+            padding: 10px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+        }
+
+        #main-content {
+            position: relative;
+        }
+
+        #debug-panel.active {
+            display: block;
+        }
+
+        #debug-panel h2 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #debug-copy-btn, #debug-toggle-view-btn, #debug-download-svg-btn {
+            padding: 8px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #debug-copy-btn:hover, #debug-toggle-view-btn:hover, #debug-download-svg-btn:hover {
+            background: #1177bb;
+        }
+
+        #debug-copy-btn:active, #debug-toggle-view-btn:active, #debug-download-svg-btn:active {
+            background: #0a4d7d;
+        }
+
+        #debug-download-svg-btn {
+            background: #065f46;
+        }
+
+        #debug-download-svg-btn:hover {
+            background: #047857;
+        }
+
+        #debug-svg-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #debug-svg-display svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #debug-json-display {
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #d4d4d4;
+            white-space: pre;
+            overflow-x: auto;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+
+        #debug-json-display::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        #debug-json-display::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        #debug-json-display::-webkit-scrollbar-thumb {
+            background: #4e4e52;
+            border-radius: 4px;
+        }
+
+        #debug-json-display::-webkit-scrollbar-thumb:hover {
+            background: #5e5e62;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Skeleton Rig Visualizer</h1>
+        <div class="header-buttons">
+            <button id="debug-toggle-btn" class="mode-toggle">Debug Panel</button>
+            <input type="file" id="upload-all-input" accept=".json" style="display: none;">
+            <button id="upload-all-btn" class="mode-toggle">Load All</button>
+            <button id="download-all-btn" class="mode-toggle">Download All</button>
+            <button id="mode-toggle" class="mode-toggle">Switch To Animation Mode</button>
+            <button id="export-keyframes-btn" class="mode-toggle">Export Keyframes</button>
+            <button id="export-svg-btn" class="mode-toggle">Export Animated SVG</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="main-content">
+            <aside id="debug-panel">
+                <h2>Debug Info</h2>
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <button id="debug-copy-btn" style="flex: 1;">Copy JSON</button>
+                    <button id="debug-toggle-view-btn" style="flex: 1;">Show SVG</button>
+                    <button id="debug-download-svg-btn" style="flex: 1;">Download SVG</button>
+                </div>
+                <div id="debug-display-container" style="position: relative;">
+                    <div id="debug-json-display">No data available</div>
+                    <div id="debug-svg-display" style="display: none; background: white; border: 1px solid #3e3e42; border-radius: 4px; padding: 10px; min-height: 200px; overflow: auto;"></div>
+                </div>
+            </aside>
+
+            <div id="canvas-container">
+                <canvas id="skeleton-canvas"></canvas>
+                <div id="viewport-controls">
+                    <h3>Viewport</h3>
+                    <div class="viewport-control-row">
+                        <label for="viewport-x">X:</label>
+                        <input type="number" id="viewport-x" class="viewport-input" step="10" value="400">
+                    </div>
+                    <div class="viewport-control-row">
+                        <label for="viewport-y">Y:</label>
+                        <input type="number" id="viewport-y" class="viewport-input" step="10" value="400">
+                    </div>
+                    <div class="viewport-control-row">
+                        <label for="viewport-zoom">Zoom:</label>
+                        <input type="number" id="viewport-zoom" class="viewport-input" step="0.1" min="0.1" max="10" value="1.5">
+                    </div>
+                    <button id="viewport-reset" class="viewport-reset-btn">Reset View</button>
+                </div>
+            </div>
+
+            <aside id="sidebar">
+                <div class="tabs">
+                    <div class="tab active" data-tab="skeleton">Skeleton</div>
+                    <div class="tab" data-tab="keyframes">Keyframes</div>
+                    <div class="tab" data-tab="graphics">Graphics</div>
+                </div>
+
+                <div id="skeleton-tab" class="tab-content active">
+                    <div class="info-section">
+                        <h2>Skeleton Info</h2>
+                        <div class="info-item">
+                            <span class="info-label">Name:</span>
+                            <span id="skeleton-name">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Version:</span>
+                            <span id="skeleton-version">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Bones:</span>
+                            <span id="bone-count">-</span>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h2>Display Options</h2>
+                        <div class="info-item" style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="skeleton-visible" checked style="cursor: pointer;">
+                            <label for="skeleton-visible" style="cursor: pointer; color: #d4d4d4;">Show Skeleton</label>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <input type="file" id="upload-skeleton-input" accept=".json" style="display: none;">
+                        <button id="upload-skeleton-btn">Load Skeleton JSON</button>
+                        <button id="download-btn">Download Skeleton JSON</button>
+                    </div>
+
+                    <div class="info-section">
+                        <h2>Bone Hierarchy</h2>
+                        <ul id="bone-list" class="bone-list"></ul>
+                    </div>
+                </div>
+
+                <div id="keyframes-tab" class="tab-content">
+                    <div class="info-section">
+                        <h2>Keyframes</h2>
+                        <ul id="keyframe-list" class="keyframe-list"></ul>
+                        <div id="keyframes-empty" class="empty-state">
+                            No keyframes yet.<br>
+                            Switch to Animation Mode to create keyframes.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="graphics-tab" class="tab-content">
+                    <div class="info-section">
+                        <h2>Picture File</h2>
+                        <input type="file" id="upload-picture-input" accept=".json" style="display: none;">
+                        <button id="upload-picture-btn" class="graphics-btn">Load Picture JSON</button>
+                        <button id="download-picture-btn" class="graphics-btn">Save Picture JSON</button>
+                    </div>
+
+                    <div class="info-section">
+                        <h2>Graphics</h2>
+                        <ul id="graphics-list" class="graphics-list"></ul>
+                        <div id="graphics-empty" class="empty-state">
+                            No graphics uploaded.<br>
+                            Click "Upload SVG" below to add graphics.
+                        </div>
+                        <input type="file" id="upload-svg-input" accept=".svg" style="display: none;">
+                        <button id="upload-svg-btn" class="graphics-btn upload">Upload SVG Graphic</button>
+                    </div>
+
+                    <div class="info-section" id="selected-graphic-panel" style="display: none;">
+                        <h2>Selected Graphic</h2>
+                        <div class="graphic-property">
+                            <label>Graphic:</label>
+                            <span id="selected-graphic-name">-</span>
+                        </div>
+
+                        <div class="graphic-property">
+                            <label for="attach-bone-select">Attach to bone:</label>
+                            <select id="attach-bone-select" class="graphic-input">
+                                <option value="">None (detached)</option>
+                            </select>
+                        </div>
+
+                        <div class="graphic-property">
+                            <label>Position offset:</label>
+                            <div class="input-group">
+                                <span>X:</span>
+                                <input type="number" id="graphic-pos-x" class="graphic-input small" step="1">
+                                <span>Y:</span>
+                                <input type="number" id="graphic-pos-y" class="graphic-input small" step="1">
+                            </div>
+                        </div>
+
+                        <div class="graphic-property">
+                            <label>Rotation:</label>
+                            <div class="input-group">
+                                <input type="number" id="graphic-rotation" class="graphic-input" step="1">
+                                <span>°</span>
+                            </div>
+                        </div>
+
+                        <div class="graphic-property">
+                            <label>Scale:</label>
+                            <div class="input-group">
+                                <span>X:</span>
+                                <input type="number" id="graphic-scale-x" class="graphic-input small" step="0.1" min="0.1">
+                                <span>Y:</span>
+                                <input type="number" id="graphic-scale-y" class="graphic-input small" step="0.1" min="0.1">
+                            </div>
+                        </div>
+
+                        <div class="graphic-property">
+                            <label>Z-Index:</label>
+                            <div class="input-group">
+                                <button id="graphic-z-down" class="z-btn">↓</button>
+                                <span id="graphic-z-index" class="z-value">0</span>
+                                <button id="graphic-z-up" class="z-btn">↑</button>
+                            </div>
+                        </div>
+
+                        <div class="graphic-actions">
+                            <button id="delete-graphic-btn" class="graphics-btn delete">Delete Graphic</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div id="timeline-container">
+            <div id="timeline-header">
+                <div id="timeline-controls">
+                    <button id="play-btn" class="timeline-btn play">Play</button>
+                    <button id="rewind-btn" class="timeline-btn">Rewind</button>
+                    <button id="add-keyframe-btn" class="timeline-btn">Add Keyframe</button>
+                    <button id="delete-keyframe-btn" class="timeline-btn">Delete Keyframe</button>
+                    <span class="timeline-separator"></span>
+                    <input type="file" id="upload-motion-input" accept=".json" style="display: none;">
+                    <button id="upload-motion-btn" class="timeline-btn">Load Motion JSON</button>
+                    <button id="download-motion-btn" class="timeline-btn">Download Motion JSON</button>
+                </div>
+                <div id="timeline-info">
+                    <span>Time: <span id="current-time">0.00</span>s / <input type="number" id="duration-input" class="duration-input" value="5.00" min="0.5" max="60" step="0.5" title="Edit duration">s</span>
+                    <span style="margin-left: 20px;">Keyframes: <span id="keyframe-count">0</span></span>
+                </div>
+            </div>
+            <div id="timeline-canvas-wrapper">
+                <canvas id="timeline-canvas"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <script src="skeleton-loader.js"></script>
+    <script src="graphics-manager.js"></script>
+    <script src="picture-loader.js"></script>
+    <script src="skeleton-renderer.js"></script>
+    <script src="animation.js"></script>
+    <script src="keyframe-exporter.js"></script>
+    <script src="svg-exporter.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

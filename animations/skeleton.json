@@ -1,0 +1,121 @@
+{
+  "version": "1.0",
+  "name": "simple-character",
+  "metadata": {
+    "author": "Artist Name",
+    "created": "2025-01-15",
+    "description": "Simple character rig with basic limbs"
+  },
+  "bones": [
+    {
+      "id": "root",
+      "parent": null,
+      "position": [
+        0,
+        0
+      ],
+      "rotation": 0,
+      "length": 0
+    },
+    {
+      "id": "torso",
+      "parent": "root",
+      "position": [
+        0.16316507814910466,
+        -0.05231192759277359
+      ],
+      "rotation": 94.5611228320376,
+      "length": 66.25467124860282
+    },
+    {
+      "id": "neck",
+      "parent": "torso",
+      "position": [
+        80.57154465423422,
+        -1.3710133528994932
+      ],
+      "rotation": 1.4478831254569684,
+      "length": 22.484846762353026
+    },
+    {
+      "id": "upper_arm_left",
+      "parent": "torso",
+      "position": [
+        66.39315875005599,
+        28.09566320511772
+      ],
+      "rotation": 68.24033594789657,
+      "length": 25.871965965721326
+    },
+    {
+      "id": "lower_arm_left",
+      "parent": "upper_arm_left",
+      "position": [
+        51.569935264316726,
+        0.5621430784067645
+      ],
+      "rotation": -328.33116467986827,
+      "length": 18.8397630768239
+    },
+    {
+      "id": "upper_arm_right",
+      "parent": "torso",
+      "position": [
+        63.520182143234926,
+        -30.117305056136058
+      ],
+      "rotation": -128.63831811216835,
+      "length": 24.155356799271097
+    },
+    {
+      "id": "lower_arm_right",
+      "parent": "upper_arm_right",
+      "position": [
+        39.1646497184621,
+        0.9174734926726096
+      ],
+      "rotation": -31.529065333706086,
+      "length": 55.56775965827733
+    },
+    {
+      "id": "upper_leg_left",
+      "parent": "root",
+      "position": [
+        -26.339261275731882,
+        -20.794214544776757
+      ],
+      "rotation": -106.05998730716065,
+      "length": 25.98883843911616
+    },
+    {
+      "id": "lower_leg_left",
+      "parent": "upper_leg_left",
+      "position": [
+        58.089603625443885,
+        4.129202242245853
+      ],
+      "rotation": 14.337637042952622,
+      "length": 22.010418109383338
+    },
+    {
+      "id": "upper_leg_right",
+      "parent": "root",
+      "position": [
+        15.446656590360554,
+        -20.363267753031675
+      ],
+      "rotation": -70.56643998379596,
+      "length": 17.71130116542955
+    },
+    {
+      "id": "lower_leg_right",
+      "parent": "upper_leg_right",
+      "position": [
+        53.20381508902001,
+        -2.6307398111516953
+      ],
+      "rotation": -6.554951500403888,
+      "length": 30.30459548203262
+    }
+  ]
+}

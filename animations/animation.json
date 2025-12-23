@@ -1,0 +1,613 @@
+{
+  "version": "1.0",
+  "skeletonRef": "simple-character",
+  "duration": 2,
+  "fps": 60,
+  "tracks": [
+    {
+      "boneId": "root",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": 0,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": 0,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "torso",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": 96.27860870476154,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": 80.63803700837322,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": 80.63803700837322,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 80.6380370083732,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 83.10757687751486,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 80.6380370083732,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 83.10757687751486,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 80.6380370083732,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": 80.63803700837322,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": 96.27860870476154,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "neck",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": 358.5436413656605,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": 358.5436413656605,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -20.094014638866106,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 339.90598536113384,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": -8.905624651281414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 339.90598536113384,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": -8.905624651281414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 339.90598536113384,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": 358.5436413656605,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": 358.5436413656605,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "upper_arm_left",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -207.79730289420806,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": 87.9149633870921,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": 21.53761611638177,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 16.881231986674237,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 42.97567373163501,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 16.881231986674237,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 42.97567373163501,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 16.881231986674237,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": 87.9149633870921,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -207.79730289420806,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "lower_arm_left",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -11.220572224120588,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -85.08896092521354,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -27.47848744151777,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": -51.80381343709142,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": -23.82336158853697,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": -51.80381343709142,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": -23.82336158853697,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": -51.80381343709142,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -85.08896092521354,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -11.220572224120588,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "upper_arm_right",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -144.796090948614,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -155.13353814812083,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -157.1919839531736,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 202.80801604682642,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 202.80801604682642,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 202.80801604682642,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 202.80801604682642,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 202.80801604682642,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -155.13353814812083,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -144.796090948614,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "lower_arm_right",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -12.960129718088837,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -12.960129718088837,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -12.960129718088837,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 347.03987028191113,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 347.03987028191113,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 347.03987028191113,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 347.03987028191113,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 347.03987028191113,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -12.960129718088837,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -12.960129718088837,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "upper_leg_left",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -115.04525049592935,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -115.04525049592935,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -115.04525049592935,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 244.9547495040706,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 244.9547495040706,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 244.9547495040706,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 244.9547495040706,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 244.9547495040706,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -115.04525049592935,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -115.04525049592935,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "lower_leg_left",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": 14.337637042952636,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": 14.337637042952636,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": 14.337637042952636,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 14.337637042952622,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 14.337637042952622,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 14.337637042952622,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 14.337637042952622,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 14.337637042952622,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": 14.337637042952636,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": 14.337637042952636,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "upper_leg_right",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -75.05820363371507,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -75.05820363371507,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -75.05820363371507,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 284.94179636628496,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 284.94179636628496,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 284.94179636628496,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 284.94179636628496,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 284.94179636628496,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -75.05820363371507,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -75.05820363371507,
+          "easing": "linear"
+        }
+      ]
+    },
+    {
+      "boneId": "lower_leg_right",
+      "keyframes": [
+        {
+          "time": 0,
+          "rotation": -10.052462077465787,
+          "easing": "linear"
+        },
+        {
+          "time": 0.2525,
+          "rotation": -10.052462077465787,
+          "easing": "linear"
+        },
+        {
+          "time": 0.5016666666666667,
+          "rotation": -10.052462077465787,
+          "easing": "linear"
+        },
+        {
+          "time": 0.6966666666666667,
+          "rotation": 349.94753792253414,
+          "easing": "linear"
+        },
+        {
+          "time": 0.9416666666666667,
+          "rotation": 349.94753792253414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.1616666666666666,
+          "rotation": 349.94753792253414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.335,
+          "rotation": 349.94753792253414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.535,
+          "rotation": 349.94753792253414,
+          "easing": "linear"
+        },
+        {
+          "time": 1.75,
+          "rotation": -10.052462077465787,
+          "easing": "linear"
+        },
+        {
+          "time": 2,
+          "rotation": -10.052462077465787,
+          "easing": "linear"
+        }
+      ]
+    }
+  ]
+}
