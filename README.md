@@ -2,6 +2,8 @@
 
 A web-based skeletal animation editor for creating 2D character animations. Create bone hierarchies, attach SVG graphics, animate with keyframes, and export to multiple formats.
 
+[Demo](https://frycz.github.io/skeleton-rig/)
+
 ![Main screen](screenshots/1.png)
 
 ## Table of Contents
