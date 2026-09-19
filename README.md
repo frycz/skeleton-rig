@@ -4,7 +4,7 @@ A web-based skeletal animation editor for creating 2D character animations. Crea
 
 [Demo](https://frycz.github.io/skeleton-rig/)
 
-![Main screen](screenshots/1.png)
+![Main screen](skeleton-rig-1200.gif)
 
 ## Table of Contents
 
