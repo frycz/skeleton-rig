@@ -260,6 +260,11 @@ async function init() {
         renderer.recomputeTransforms();
         renderer.render();
 
+        // Start in Animation Mode
+        if (!isAnimationMode) {
+            toggleAnimationMode();
+        }
+
         console.log('Complete animation data loaded successfully');
     } catch (error) {
         console.error('Failed to load complete animation:', error);
